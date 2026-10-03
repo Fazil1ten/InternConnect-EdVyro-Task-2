@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 const crypto = require('crypto');
+const http = require('http');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
