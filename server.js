@@ -9,7 +9,7 @@ const seed = JSON.parse(fs.readFileSync(path.join(ROOT, 'seed.json'), 'utf8'));
 const applications = new Map();
 
 const MIME = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml'};
-const send = (res, status, payload, headers={}) => { res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', ...headers}); res.end(JSON.stringify(payload)); };
+const send = (res, status, payload, headers={}) => { res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', ...headers}); res.end(JSON.stringify(payload)); return true; };
 const ok = (data, pagination={}) => ({status:'success', data, pagination});
 const fail = (message, code='BAD_REQUEST') => ({status:'error', error:{code,message}});
 const readBody = req => new Promise((resolve,reject)=>{ let body=''; req.on('data', c=>{ body += c; if(body.length > 100000) req.destroy(); }); req.on('end',()=>{ try{resolve(body ? JSON.parse(body) : {});}catch(e){reject(new Error('Invalid JSON body.'));} }); req.on('error',reject); });
